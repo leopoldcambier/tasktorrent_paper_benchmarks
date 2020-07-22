@@ -16,7 +16,6 @@ PRUNE=0 NROWS=8 NCOLS=8 BLOCK_SIZE=256 NUM_BLOCKS=256 sbatch -c 32 -n 64 run_gem
 # Blocksize plots
 #
 
-PRUNE=0 NROWS=8 NCOLS=8 BLOCK_SIZE=32   NUM_BLOCKS=1024 sbatch -c 32 -n 64 run_gemm_2d.sh
 PRUNE=0 NROWS=8 NCOLS=8 BLOCK_SIZE=64   NUM_BLOCKS=512  sbatch -c 32 -n 64 run_gemm_2d.sh
 PRUNE=0 NROWS=8 NCOLS=8 BLOCK_SIZE=128  NUM_BLOCKS=256  sbatch -c 32 -n 64 run_gemm_2d.sh
 PRUNE=0 NROWS=8 NCOLS=8 BLOCK_SIZE=256  NUM_BLOCKS=128  sbatch -c 32 -n 64 run_gemm_2d.sh
