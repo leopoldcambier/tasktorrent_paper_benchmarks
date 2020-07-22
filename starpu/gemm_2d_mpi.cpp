@@ -4,13 +4,15 @@ using namespace std;
 using namespace Eigen;
 
 void gemm_2d(const int block_size, const int num_blocks, const int rank, const int nranks, const int test, const int nrow, const int ncol, const bool prune) {
-    
-    // Warmup MKL
-    Eigen::MatrixXd A = Eigen::MatrixXd::Identity(256,256);
-    Eigen::MatrixXd B = Eigen::MatrixXd::Identity(256,256);
-    Eigen::MatrixXd C = Eigen::MatrixXd::Identity(256,256);
-    for(int i = 0; i < 10; i++) {
-        cblas_dgemm(CblasColMajor, CblasNoTrans, CblasNoTrans, 256, 256, 256, 1.0, A.data(), 256, B.data(), 256, 1.0, C.data(), 256);
+
+    {    
+        // Warmup MKL
+        Eigen::MatrixXd A = Eigen::MatrixXd::Identity(256,256);
+        Eigen::MatrixXd B = Eigen::MatrixXd::Identity(256,256);
+        Eigen::MatrixXd C = Eigen::MatrixXd::Identity(256,256);
+        for(int i = 0; i < 10; i++) {
+            cblas_dgemm(CblasColMajor, CblasNoTrans, CblasNoTrans, 256, 256, 256, 1.0, A.data(), 256, B.data(), 256, 1.0, C.data(), 256);
+        }
     }
     
     vector<MatrixXd*> blocksA(num_blocks*num_blocks);

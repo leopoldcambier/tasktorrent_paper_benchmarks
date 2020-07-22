@@ -91,6 +91,16 @@ void cholesky(const int block_size, const int num_blocks, const int rank, const 
     const int ncores = starpu_worker_get_count_by_type(STARPU_CPU_WORKER);
     const int matrix_size = block_size * num_blocks;
     
+    // Warmup MKL
+    {
+        Eigen::MatrixXd A = Eigen::MatrixXd::Identity(256,256);
+        Eigen::MatrixXd B = Eigen::MatrixXd::Identity(256,256);
+        Eigen::MatrixXd C = Eigen::MatrixXd::Identity(256,256);
+        for(int i = 0; i < 10; i++) {
+            cblas_dgemm(CblasColMajor, CblasNoTrans, CblasNoTrans, 256, 256, 256, 1.0, A.data(), 256, B.data(), 256, 1.0, C.data(), 256);
+        }
+    }
+    
     std::mt19937 gen(2020);
     assert(upper_block_size <= 2*block_size);
     const int lower_block_size = 2*block_size - upper_block_size;
