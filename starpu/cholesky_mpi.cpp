@@ -201,7 +201,7 @@ void cholesky(const int block_size, const int num_blocks, const int rank, const 
             }
 
             // SYRK
-            if( (!prune) || block_2_rank(ii,kk) == rank ) {
+            if( (!prune) || block_2_rank(ii,kk) == rank || block_2_rank(ii,ii) == rank) {
                 if(is_block_non_empty(ii,kk)){
                     starpu_mpi_task_insert(MPI_COMM_WORLD,&syrk_cl, 
                         STARPU_R,  dataA[ii+kk*num_blocks],
@@ -282,6 +282,7 @@ void cholesky(const int block_size, const int num_blocks, const int rank, const 
             L1.transpose().solveInPlace(b);
             double error = (b - x).norm() / x.norm();
             printf("\nError solve: %e\n\n", error);
+            assert(error < 1e-6);
         }
     }
 }
