@@ -139,8 +139,8 @@ int main(int argc, char **argv) {
     printf("[%dx%d] Done, time %e s.\n", myrow, mycol, MPIt2 - MPIt1);
     int ncores = -1;
     if(const char* env_p = std::getenv("MKL_NUM_THREADS")) ncores = atoi(env_p);
-    printf(">>>>rank,nranks,ncores,matrix_size,block_size,num_blocks,total_time\n");
-    printf("[%d]>>>>%d,%d,%d,%d,%d,%d,%e\n",myrank_mpi,myrank_mpi,nprocs_mpi,ncores,n,nb,(n+nb-1)/nb,MPIt2-MPIt1);
+    printf(">>>>exp rank nranks ncores matrix_size block_size num_blocks total_time\n");
+    printf("[%d]>>>>scalapack_pdpotrf %d %d %d %d %d %d %e\n",myrank_mpi,myrank_mpi,nprocs_mpi,ncores,n,nb,(n+nb-1)/nb,MPIt2-MPIt1);
     free(A);
 
     // Exit and finalize

@@ -132,17 +132,19 @@ int main(int argc, char **argv) {
     // Run dgemm and time
     double alpha = 1.0;
     double beta = 0.0;
-    double MPIt1 = MPI_Wtime();
     printf("[%dx%d] Starting dgemm\n", myrow, mycol);
+    MPI_Barrier(MPI_COMM_WORLD);
+    double MPIt1 = MPI_Wtime();
     pdgemm_(&notrans, &notrans, &n, &n, &n, 
             &alpha,
             A, &ione, &ione, descA,
             B, &ione, &ione, descB,
             &beta,
             C, &ione, &ione, descC);
+    MPI_Barrier(MPI_COMM_WORLD);
     double MPIt2 = MPI_Wtime();
     printf("[%dx%d] Done, time %e s.\n", myrow, mycol, MPIt2 - MPIt1);
-    printf("exp,rank,nranks,matrix_size,block_size,total_time\n");	
+    printf("exp rank nranks matrix_size block_size total_time\n");	
     printf("[%d]>>>>scalapack_pdgemm %d %d %d %d %e\n", myrank_mpi, myrank_mpi, nprocs_mpi, n, nb, MPIt2 - MPIt1);
 
     size_t error = 0;
