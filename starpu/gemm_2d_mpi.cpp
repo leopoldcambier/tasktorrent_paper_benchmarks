@@ -123,6 +123,7 @@ void gemm_2d(const int block_size, const int num_blocks, const int rank, const i
             MatrixXd C = A * B;
             double error = (C - Cref).cwiseAbs().maxCoeff() / Cref.cwiseAbs().maxCoeff();
             printf("\nError solve: %e\n\n", error);
+            assert(error < 1e-6);
         }
     }
 }
